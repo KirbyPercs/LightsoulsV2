@@ -47,44 +47,7 @@ Rayfield:Notify({
 local Button = MainTab:CreateButton({
    Name = "Speed",
    Callback = function()
-   using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
- 
-public class Movement : MonoBehaviour
-{
-    public float Speed = 200f;
-    public float jumpforce = 1000f;
-    Rigidbody2D rb;
-     bool jump = false;
- 
-    void Start()
-    {
-       rb = GetComponent<Rigidbody2D>();
-    }
- 
-    // Update is called once per frame
-    void FixedUpdate()
-    {
- 
-        float movehorizontal = Input.GetAxisRaw("Horizontal");
-        float movevertical = Input.GetAxisRaw("Vertical");
- 
-        Vector2 movement = new Vector2(movehorizontal, 0);
-        rb.AddForce(movement * Speed);
- 
-        if (Input.GetKey(KeyCode.Z))
-        {
-            jump = true;
-        }
- 
-        if (jump == true)
-        {
-            Vector2 Jump = new Vector2(0, movevertical);
-            rb.AddForce(Jump * jumpforce);
-        }
-    }
-}
+  
    end,
 })
 
@@ -133,5 +96,41 @@ if game:GetService("Players").LocalPlayer.Character.UpperTorso:FindFirstChild'Wa
 game:GetService("Players").LocalPlayer.Character.UpperTorso.Waist:Remove()
 end
 end
+   end,
+})
+
+local Button = MainTab:CreateButton({
+   Name = "GodmodeV2",
+   Callback = function()
+    This script is made by TheMotoriousBIG (roblox)
+- God Mode is unable to kill people in-game.
+ 
+local player = game.Players.LocalPlayer
+ 
+if player.Character then
+ 
+if player.Character:FindFirstChild("Humanoid") then
+ 
+player.Character.Humanoid.Name = "1"
+ 
+end
+ 
+local l = player.Character["1"]:Clone()
+ 
+l.Parent = player.Character
+ 
+l.Name = "Humanoid"; wait(0.1)
+ 
+player.Character["1"]:Destroy()
+ 
+workspace.CurrentCamera.CameraSubject = player.Character.Humanoid
+ 
+player.Character.Animate.Disabled = true; wait(0.1)
+ 
+player.Character.Animate.Disabled = false
+ 
+end
+ 
+print("Godmode Has Loaded.")
    end,
 })
