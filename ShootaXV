@@ -1,7 +1,7 @@
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 local Window = Rayfield:CreateWindow({
-   Name = "LightSoulsV2 🏖",
+   Name = "LightSoulsV2 🏖 | Hood Modded",
    LoadingTitle = "LightSoulsV2 Hub",
    LoadingSubtitle = "by blade",
    ConfigurationSaving = {
@@ -47,11 +47,12 @@ Rayfield:Notify({
 local Button = MainTab:CreateButton({
    Name = "Speed",
    Callback = function()
-  
+   player = game.Players.LocalPlayer
+    player.Character.Humanoid.WalkSpeed = 200
    end,
 })
 
-local Button = Tab:CreateButton({
+local Button = MainTab:CreateButton({
    Name = "Fly",
    Callback = function()
    -- fly made by KirbyX and Blade
@@ -59,7 +60,7 @@ loadstring("\108\111\97\100\115\116\114\105\110\103\40\103\97\109\101\58\72\116\
    end,
 })
 
-local Button = Tab:CreateButton({
+local Button = MainTab:CreateButton({
    Name = "godmode",
    Callback = function()
    _G.bypass = true -- make it to false in order to reset / Default : true
@@ -102,8 +103,8 @@ end
 local Button = MainTab:CreateButton({
    Name = "GodmodeV2",
    Callback = function()
-    This script is made by TheMotoriousBIG (roblox)
-- God Mode is unable to kill people in-game.
+    --This script is made by TheMotoriousBIG (roblox)
+--God Mode is unable to kill people in-game.
  
 local player = game.Players.LocalPlayer
  
@@ -132,5 +133,33 @@ player.Character.Animate.Disabled = false
 end
  
 print("Godmode Has Loaded.")
+   end,
+})
+
+local Button = MainTab:CreateButton({
+   Name = "CFrame Speed",
+   Callback = function()
+--CFrame Speed Script
+
+--Function to calculate the speed of a CFrame movement
+local function calculateCFrameSpeed(startCFrame, endCFrame, deltaTime)
+    local positionDelta = endCFrame.Position - startCFrame.Position
+    local rotationDelta = endCFrame - endCFrame.Position - (startCFrame - startCFrame.Position)
+    
+    local linearSpeed = positionDelta.Magnitude / deltaTime
+    local angularSpeed = rotationDelta.Magnitude / deltaTime
+    
+    return linearSpeed, angularSpeed
+end
+
+-- Example usage
+local startCFrame = CFrame.new(0, 0, 0)
+local endCFrame = CFrame.new(5, 0, 0) + CFrame.Angles(0, math.pi/2, 0)
+local deltaTime = 1 -- Time in seconds
+
+local linearSpeed, angularSpeed = calculateCFrameSpeed(startCFrame, endCFrame, deltaTime)
+
+print("Linear Speed:", linearSpeed)
+print("Angular Speed:", angularSpeed)
    end,
 })
