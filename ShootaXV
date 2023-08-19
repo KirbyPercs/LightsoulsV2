@@ -2069,7 +2069,10 @@ local Button = AimingTab:CreateButton({
 local Button = AimingTab:CreateButton({
    Name = "Slient Aim",
    Callback = function()
-   loadstring(game:HttpGet("https://raw.githubusercontent.com/Nosssa/NossLock/main/SimpleSilentAim"))()
+   _G.FOV =  (  200  )
+_G.Prediction =  (  .18  )
+_G.AimKey =  (  "q"  )
+loadstring(game:HttpGet(("https://raw.githubusercontent.com/Nessa-Rurina/Nosslock/main/SilentAim.lua"), true))()
    end,
 })
 
