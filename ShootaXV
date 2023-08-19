@@ -2079,6 +2079,304 @@ loadstring(game:HttpGet(("https://raw.githubusercontent.com/Nessa-Rurina/Nossloc
 local Button = AimingTab:CreateButton({
    Name = "Cam Lock",
    Callback = function()
-   -- The function that takes place when the button is pressed
+   --.gg/lockers runs you
+--Made by sparkyz
+getgenv().Prediction = 0.1452833
+getgenv().AimPart = "HumanoidRootPart"
+getgenv().Key = "Q"
+getgenv().DisableKey = "P"
+getgenv().FOV = true
+getgenv().ShowFOV = false
+getgenv().FOVSize = 100
+--// Variables (Service)
+local Players = game:GetService("Players")
+local RS = game:GetService("RunService")
+local WS = game:GetService("Workspace")
+local GS = game:GetService("GuiService")
+local SG = game:GetService("StarterGui")
+--// Variables (regular)
+local LP = Players.LocalPlayer
+local Mouse = LP:GetMouse()
+local Camera = WS.CurrentCamera
+local GetGuiInset = GS.GetGuiInset
+local AimlockState = true
+local Locked
+local Victim
+local SelectedKey = getgenv().Key
+local SelectedDisableKey = getgenv().DisableKey
+--// Notification function
+function Notify(tx)
+    SG:SetCore("SendNotification", {
+        Title = "Cam Lock Enabled | .gg/thusky",
+        Text = tx,
+        Duration = 5
+    })
+end
+--// Check if aimlock is loaded
+if getgenv().Loaded == true then
+    Notify("Aimlock is already loaded!")
+    return
+end
+getgenv().Loaded = true
+--// FOV Circle
+local fov = Drawing.new("Circle")
+fov.Filled = false
+fov.Transparency = 1
+fov.Thickness = 1
+fov.Color = Color3.fromRGB(255, 255, 0)
+fov.NumSides = 1000
+--// Functions
+function update()
+    if getgenv().FOV == true then
+        if fov then
+            fov.Radius = getgenv().FOVSize * 2
+            fov.Visible = getgenv().ShowFOV
+            fov.Position = Vector2.new(Mouse.X, Mouse.Y + GetGuiInset(GS).Y)
+            return fov
+        end
+    end
+end
+function WTVP(arg)
+    return Camera:WorldToViewportPoint(arg)
+end
+function WTSP(arg)
+    return Camera.WorldToScreenPoint(Camera, arg)
+end
+function getClosest()
+    local closestPlayer
+    local shortestDistance = math.huge
+    for i, v in pairs(game.Players:GetPlayers()) do
+        local notKO = v.Character:WaitForChild("BodyEffects")["K.O"].Value ~= true
+        local notGrabbed = v.Character:FindFirstChild("GRABBING_COINSTRAINT") == nil
+ 
+        if v ~= game.Players.LocalPlayer and v.Character and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health ~= 0 and v.Character:FindFirstChild(getgenv().AimPart) and notKO and notGrabbed then
+            local pos = Camera:WorldToViewportPoint(v.Character.PrimaryPart.Position)
+            local magnitude = (Vector2.new(pos.X, pos.Y) - Vector2.new(Mouse.X, Mouse.Y)).magnitude
+ 
+            if (getgenv().FOV) then
+                if (fov.Radius > magnitude and magnitude < shortestDistance) then
+                    closestPlayer = v
+                    shortestDistance = magnitude
+                end
+            else
+                if (magnitude < shortestDistance) then
+                    closestPlayer = v
+                    shortestDistance = magnitude
+                end
+            end
+        end
+    end
+    return closestPlayer
+end
+ 
+--// Checks if key is down
+Mouse.KeyDown:Connect(function(k)
+    SelectedKey = SelectedKey:lower()
+    SelectedDisableKey = SelectedDisableKey:lower()
+    if k == SelectedKey then
+        if AimlockState == true then
+            Locked = not Locked
+            if Locked then
+                Victim = getClosest()
+                Notify("Locked onto: "..tostring(Victim.Character.Humanoid.DisplayName))
+            else
+                if Victim ~= nil then
+                    Victim = nil
+                    Notify("Unlocked!")
+                end
+            end
+        else
+            Notify("Aimlock is not enabled!")
+        end
+    end
+    if k == SelectedDisableKey then
+        AimlockState = not AimlockState
+    end
+end)
+--// Loop update FOV and loop camera lock onto target
+RS.RenderStepped:Connect(function()
+    update()
+    if AimlockState == true then
+        if Victim ~= nil then
+            Camera.CFrame = CFrame.new(Camera.CFrame.p, Victim.Character[getgenv().AimPart].Position + Victim.Character[getgenv().AimPart].Velocity*getgenv().Prediction)
+        end
+    end
+end)
+	while wait() do
+        if getgenv().AutoPrediction == true then
+        local pingvalue = game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValueString()
+        local split = string.split(pingvalue,'(')
+        local ping = tonumber(split[1])
+            if ping < 225 then
+            getgenv().Prediction = 1.4
+        elseif ping < 215 then
+            getgenv().Prediction = 1.2
+	    elseif ping < 205 then
+            getgenv().Prediction = 1.0
+	    elseif ping < 190 then
+            getgenv().Prediction = 0.10
+        elseif ping < 180 then
+            getgenv().Prediction = 0.12
+	    elseif ping < 170 then
+            getgenv().Prediction = 0.15
+	    elseif ping < 160 then
+            getgenv().Prediction = 0.18
+	    elseif ping < 150 then
+            getgenv().Prediction = 0.110
+        elseif ping < 140 then
+            getgenv().Prediction = 0.113
+        elseif ping < 130 then
+            getgenv().Prediction = 0.116
+        elseif ping < 120 then
+            getgenv().Prediction = 0.120
+        elseif ping < 110 then
+            getgenv().Prediction = 0.124
+        elseif ping < 105 then
+            getgenv().Prediction = 0.127
+        elseif ping < 90 then
+            getgenv().Prediction = 0.130
+        elseif ping < 80 then
+            getgenv().Prediction = 0.133
+        elseif ping < 70 then
+            getgenv().Prediction = 0.136
+        elseif ping < 60 then
+            getgenv().Prediction = 0.15038
+        elseif ping < 50 then
+            getgenv().Prediction = 0.15038
+        elseif ping < 40 then
+            getgenv().Prediction = 0.145
+        elseif ping < 30 then
+            getgenv().Prediction = 0.155
+        elseif ping < 20 then
+            getgenv().Prediction = 0.157
+        end
+        end
+	end
+   end,
+})
+
+local AimingSection = AimingTab:CreateSection("Aim Viewer")
+
+local Button = AimingTab:CreateButton({
+   Name = "Aim Viewer",
+   Callback = function()
+   getgenv().LuckyHub = {
+    Preload = {
+        ["Notifications"] = true, -- // Global notifications toggle
+        ["Intro"] = true, -- // Enables short intro
+        ["UseGUI"] = false, -- // Uses GUI // Doesnt use settings below
+        ["VelocityStats"] = true, -- // Enables velocity stats
+    },
+    Underground = {
+        ["Enabled"] = true, -- // Underground enabled
+        ["Keybind"] = "P", -- // Underground keybind
+        ["Amount"] = 1000, -- // Underground amount
+    },
+    Sky = {
+        ["Enabled"] = true, -- // Sky enabled
+        ["Keybind"] = "L", -- // Sky keybind
+        ["Amount"] = 1000, -- // Sky amount
+    },
+    CustomVelocity = {
+        ["Enabled"] = true, -- // Custom velocity enabled
+        ["Keybind"] = "H", -- // Custom velocity keybind
+        ["CustomX"] = 2000, -- // Custom velocity custom X
+        ["CustomY"] = 100, -- // Custom velocity custom Y
+        ["CustomZ"] = 1000, -- // Custom velocity custom Z
+    },
+    PredictionChanger = {
+        ["Enabled"] = true, -- // Prediction Changer enabled
+        ["Keybind"] = "B", -- // Prediction changer keybind
+        ["Amount"] = 10, -- // Prediction changer amount // Use 0 for prediction disabler
+    },
+    SpinbotDesync = {
+        ["Enabled"] = true, -- // Spinbot desync enabled
+        ["Keybind"] = "J", -- // Spinbot desync keybind
+        ["Amount"] = 10000, -- // Spinbot desync amount
+        ["DesyncAngles"] = 500, -- // Basically how fast you spin
+    },
+    NetworkDesync = {
+        ["Enabled"] = true, -- // Network desync enabled
+        ["Keybind"] = "V", -- // Network desync keybind
+        ["Amount"] = 2, -- // 2 Recommended
+    },
+    Shake = {
+        ["Enabled"] = true, -- // Shake enabled
+        ["Keybind"] = "N", -- // Shake keybind
+        ["CustomX"] = 5500, -- // Custom shake X
+        ["CustomY"] = 9000, -- // Custom shake Y
+        ["CustomZ"] = 3000, -- // Custom shake Z
+    },
+    AimViewer = {
+        ["Enabled"] = true, -- // Aim viewer enabled
+        ["Keybind"] = "T", -- // Aim viewer keybind
+        ["Width"] = 0.3, -- // Aim viewer width
+        ["RainbowMode"] = true, -- // Rainbow aim viewer if true will not use color below
+        ["Color"] = Color3.fromRGB(0, 255, 0), -- // Aim viewer color
+        ["ViewTarget"] = true, -- // Views target
+        ["HighlightTarget"] = true, -- // Enables highlight target
+        ["RainbowHighlight"] = true, -- // If true it wont use colors below
+        ["FillColor"] = Color3.fromRGB(0, 255, 0), -- // Highlight fill color
+        ["OutlineColor"] = Color3.fromRGB(255, 255, 255), -- // Hightlight outline color
+        ["Material"] = "Neon", -- // Aim viewer material
+        ["Method"] = "MousePos", -- // Dont change unless you know what you are doing
+    },
+}
+--
+loadstring(game:HttpGet('https://raw.githubusercontent.com/CoolKid52321/LuckyHub/main/AntilockMain', true))()
+ end,
+})
+
+local TogglesTab = Window:CreateTab("Toggles", nil) -- Title, Image
+local TogglesSection = TogglesTab:CreateSection("Toggles")
+
+local Button = MiscTab:CreateButton({
+   Name = "Anti Ban",
+   Callback = function()
+   --[[Made by ThroughTheFireAndFlames#9925 |
+
+         Anti Report [Universal]
+
+--]]------------------------------------
+
+getgenv().ForbiddenWords = {"hack","exploit","script","report","cheat","executor","skid","owner","creator","admin","staff","anti","mod"} -- Listens to these keywords no matter if they are capital letters or not
+
+getgenv().Reaction = function() -- Serverhopper: Was not made by me but used rightfully as a open source tool for everyone to look at.
+        local HttpService, TPService = game:GetService("HttpService"), game:GetService("TeleportService");
+        local OtherServers = HttpService:JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?sortOrder=Asc&limit=100"));
+        function joinNew()
+                if not isfile("servers.sss") then
+                        writefile("servers.sss", HttpService:JSONEncode({}));
+                end
+                local dontJoin = readfile("servers.sss");
+                dontJoin = HttpService:JSONDecode(dontJoin);
+                for Index, Server in next, OtherServers['data'] do
+                        if (Server ~= game.JobId) then
+                                local j = true;
+                                for a, c in pairs(dontJoin) do
+                                        if (c == Server.id) then
+                                                j = false;
+                                        end
+                                end
+                                if j then
+                                        table.insert(dontJoin, Server['id']);
+                                        writefile("servers.sss", HttpService:JSONEncode(dontJoin));
+                                        wait();
+                                        return Server['id'];
+                                end
+                        end
+                end
+        end
+        local server = joinNew();
+        if not server then
+                writefile("servers.sss", HttpService:JSONEncode({}));
+                local server = joinNew();
+                TPService:TeleportToPlaceInstance(game.PlaceId, server);
+        else
+                TPService:TeleportToPlaceInstance(game.PlaceId, server);
+        end
+end;
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Lvl9999/AntiReport/main/Universal"))();
    end,
 })
