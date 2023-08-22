@@ -2443,52 +2443,8 @@ end)
 })
 
 local Button = Tab:CreateButton({
-   Name = "Trash Talk J",
+   Name = "",
    Callback = function()
-   local plr = game.Players.LocalPlayer
-    repeat wait() until plr.Character
-    local char = plr.Character
-
-    local garbage = {        
-        "Synapse X on top👻👻👻";
-        "God might forgive you but SInnerXX won't👑👑👑";
-        "who is letting me cook🔥🔥🔥";
-        "How so doggy💦💦💦💦";
-        "Imagine not being a SInnerXX premuim user 🤡💀🛡";
-        "----- Hyperyion was here :3";
-        "pipe down lil knee guh🐒🐒";
-        "If i was you i would just log💀💀💀";
-        "Sob harder😭😭😭😭";
-        "You look like the kind of person that dies in the tutorial💀💀💀";
-        "I hate people like you👮‍♂️👮‍♂️";
-
-
-
-
-
-
-
-
-
-
-
-    }
-
-
-    function TrashTalk(inputObject, gameProcessedEvent)
-        if inputObject.KeyCode == Enum.KeyCode.J and gameProcessedEvent == false then        
-            game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-                garbage[math.random(1,#garbage)],
-                "All"
-            )
-        end
-    end
-
-    game:GetService("UserInputService").InputBegan:connect(TrashTalk)
- 
-if combo > 45 then
-   c("0x01")
-end
-end)
+   
    end,
 })
